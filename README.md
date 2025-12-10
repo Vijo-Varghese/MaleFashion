@@ -1,1 +1,1 @@
-# Django-project1
+Developed a complete online shopping platform for men’s clothing, shoes,and watches with features including category filtering, user authentication,cart management, and a fully responsive interface. The application was built using HTML, CSS, Bootstrap, and JavaScript for the front-end, with Python and Django handling backend functionality and MySQL used for database management.
