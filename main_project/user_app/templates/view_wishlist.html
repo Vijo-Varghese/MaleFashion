@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}wishlist{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>Wishlist</h4>
+                        <!-- <div class="breadcrumb__links">
+                            <a href="./index.html">Home</a>
+                            <a href="./shop.html">Shop</a>
+                            <span>Check Out</span>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+<section class="shop spad">
+    <div class="container">
+        <div class="row">
+
+            <!-- Sidebar (kept but no layout influence) -->
+            <div class="col-lg-3" style="display:none;">
+                <div class="shop__sidebar">
+                    <div class="shop__sidebar__accordion"></div>
+                </div>
+            </div>
+
+            <!-- Products full-width and centered -->
+            <div class="col-lg-12">
+                <div class="row justify-content-center">
+
+                    {% for i in wishlist %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="product__item" style="text-align:center;">
+                            
+                            <div class="product__item__pic set-bg" 
+                                 data-setbg="{{ i.product.image.url }}"
+                                 style="background-size:contain !important;
+                                        background-repeat:no-repeat;
+                                        background-position:center;
+                                        height:250px;
+                                        border:1px solid #eee;">
+                            </div>
+
+                            <div class="" style="margin-top:10px;">
+                                <h6 style="font-size:16px;">{{ i.product.product_name }}</h6>
+                                <h5 style="font-weight:bold; color:#000;">₹{{ i.product.price }}</h5>
+                                <a href="{% url 'wishlist_delete' i.id %}" style="color: black; text-decoration: none;" onmouseover="this.style.color='black';" onmouseout="this.style.color='black';">
+                                <i class="fa fa-close" style="color: black;"></i>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

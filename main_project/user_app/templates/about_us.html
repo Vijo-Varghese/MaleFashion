@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}feedback{% endblock %}
+
+{% block content %}
+
+<!-- Breadcrumb / Heading -->
+ <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>About Us</h4>
+                        <!-- <div class="breadcrumb__links">
+                            <a href="./index.html">Home</a>
+                            <a href="./shop.html">Shop</a>
+                            <span>Check Out</span>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section Begin -->
+    <section class="about spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="about__pic">
+                        <img src="{% static 'img/about/about-us.jpg' %}" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="about__item">
+                        <h4>Who We Are ?</h4>
+                        <p>We believe fashion should feel premium without the premium attitude. Every item is curated with care, detail, and purpose — because you deserve better than average.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="about__item">
+                        <h4>Who We Do ?</h4>
+                        <p>We create fashion that blends quality, comfort, and timeless design. Every product is thoughtfully selected to elevate your everyday style</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="about__item">
+                        <h4>Why Choose Us</h4>
+                        <p>Because quality shouldn’t be a gamble. We focus on premium materials, clean designs, and fair pricing — no shortcuts, no compromises.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section End -->
+
+    <!-- Testimonial Section Begin -->
+    <section class="testimonial">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 p-0">
+                    <div class="testimonial__text">
+                        <span class="icon_quotations"></span>
+                        <p>“Going out after work? Take your butane curling iron with you to the office, heat it up,
+                            style your hair before you leave the office and you won't have to make a trip back home.”
+                        </p>
+                        <div class="testimonial__author">
+                            <div class="testimonial__author__pic">
+                                <img src="{% static 'img/about/testimonial-author.jpg' %}" alt="">
+                            </div>
+                            <div class="testimonial__author__text">
+                                <h5>Augusta Schultz</h5>
+                                <p>Fashion Design</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                    <div class="testimonial__pic set-bg" data-setbg="{% static 'img/about/testimonial-pic.jpg' %}"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Testimonial Section End -->
+
+
+    {% endblock %}

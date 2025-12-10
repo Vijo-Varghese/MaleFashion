@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}feedback{% endblock %}
+
+{% block content %}
+
+ <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>Return</h4>
+                        <!-- <div class="breadcrumb__links">
+                            <a href="./index.html">Home</a>
+                            <a href="./shop.html">Shop</a>
+                            <span>Check Out</span>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <form action="{% url 'return_pro' booking.id%}" method="post"
+                      class="shadow-sm p-4 rounded-4 bg-white" style="border:1px solid #eaeaea; transition:0.3s;">
+                    {% csrf_token %}
+
+                    <h5 class="text-center fw-semibold mb-4">Return Request</h5>
+
+                    <div class="mb-3">
+                        <label for="reason" class="form-label fw-semibold">Reason</label>
+                        <input type="text" class="form-control rounded-3" id="reason" name="reason"
+                               placeholder="Enter your reason" required>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-outline-dark px-4 py-2 fw-semibold"
+                                style="border-radius:8px;">Submit</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

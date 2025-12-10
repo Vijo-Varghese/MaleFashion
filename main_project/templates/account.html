@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  {% for i in messages %}
+    <script>
+        alert("{{ i }}")
+    </script>
+  {% endfor %}
+{% if role == "buyer" %}
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>Order History</h4>
+                        <!-- <div class="breadcrumb__links">
+                            <a href="./index.html">Home</a>
+                            <a href="./shop.html">Shop</a>
+                            <span>Check Out</span>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<div class="container my-5">
+
+    {% if booking %}
+        <div class="row">
+            {% for b in booking %}
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title mb-2">{{ b.product.product_name }}</h5>
+                        <p class="mb-1"><strong>Quantity:</strong> {{ b.quantity }}</p>
+                        <p class="mb-1"><strong>Total:</strong> ₹{{ b.total_amount }}</p>
+
+<p class="mb-3">
+    <strong>Status:</strong> 
+    <span style="background-color:#28a745; color:white; padding:0.5rem 0.9rem; font-size:0.95rem; border-radius:0.35rem;">
+        {{ b.status }}
+    </span>
+</p>
+
+<p class="mb-3">
+    <strong>Delivery Status:</strong> 
+    <span style="padding:0.5rem 0.9rem; font-size:0.95rem; border-radius:0.35rem;
+        {% if b.delivery_status == 'Delivered' %}background-color:#007bff; color:white;
+        {% elif b.delivery_status == 'Shipped' %}background-color:#fd7e14; color:white;
+        {% elif b.delivery_status == 'Out For Delivery' %}background-color:#20c997; color:white;
+        {% elif b.delivery_status == 'Confirmed' %}background-color:#6c757d; color:white;
+        {% endif %}">
+        {{ b.delivery_status }}
+    </span>
+</p>
+
+
+
+
+                        <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#details{{ b.id }}">
+                            Preview Details
+                        </button>
+
+                        <div class="collapse mt-3" id="details{{ b.id }}">
+                            <div class="card card-body p-3 bg-light">
+                                <p class="mb-1"><strong>Buyer:</strong> {{ b.buyer.user.first_name }} {{ b.buyer.user.last_name }}</p>
+                                <p class="mb-1"><strong>Ordered On:</strong> {{ b.date|date:"d M Y H:i" }}</p>
+                                <p class="mb-1"><strong>Description:</strong> {{ b.product.description }}</p>
+
+                                {% if b.delivery_status != 'Delivered' %}
+                                    <a href="{% url 'tracking' b.id %}" class="btn btn-outline-primary btn-sm mt-2">Track Delivery</a>
+                                {% else %}
+                                    <!-- Feedback Button -->
+                                    <a href="{% url 'feedback' b.id %}" 
+                                       class="btn btn-primary btn-sm mt-2 {% if b.id in feedbacks %}disabled{% endif %}">
+                                       Feedback
+                                    </a>
+
+                                    <!-- Return Button -->
+                                    {% if b.delivered_at %}
+                                        {% if b.id in returns %}
+                                            <a class="btn btn-danger btn-sm mt-2 disabled">Return Order</a>
+                                        {% elif b.delivered_at|timesince < "7 days" %}
+                                            <a href="{% url 'return_pro' b.id %}" class="btn btn-danger btn-sm mt-2">Return Order</a>
+                                        {% else %}
+                                            <span class="text-muted mt-2 d-block">Return period expired ❌</span>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">You have no orders yet.</p>
+    {% endif %}
+</div>
+
+<!-- Bootstrap JS for collapse -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+{% elif role == "staff" %}
+
+
+<div class="container my-5">
+    {% if booking %}
+        <div class="row">
+            {% for b in booking %}
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body d-flex justify-content-between align-items-start">
+                        
+                        <!-- Left side: existing text -->
+                        <div class="flex-grow-1 me-3">
+                            <h5 class="card-title">Product: <b>{{ b.product.product_name }}</b></h5>
+                            <p class="mb-1"><strong>Buyer:</strong> {{ b.buyer.user.first_name }} {{ b.buyer.user.last_name }}</p>
+                            <p class="mb-1"><strong>Quantity:</strong> {{ b.quantity }}</p>
+                            <p class="mb-1"><strong>Total Amount:</strong> ₹{{ b.total_amount }}</p>
+                            <p class="mb-1">
+                                <strong>Status:</strong> 
+                                <span class="badge {{ b.status }}">{{ b.status }}</span>
+                            </p>
+                            <p class="mb-3">
+                                <strong>Delivery Status:</strong> 
+                                <span class="badge {{ b.delivery_status|slugify }}">{{ b.delivery_status }}</span>
+                            </p>
+                            <p><strong>Ordered On:</strong> {{ b.date|date:"d M Y H:i" }}</p>
+                        </div>
+
+                        <!-- Right side: product image -->
+                        <div style="flex-shrink:0; width:100px;">
+                            <img src="{{ b.product.image.url }}" alt="{{ b.product.product_name }}" 
+                                 class="img-fluid rounded" style="width:100px; height:100px; object-fit:cover;">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>You have no orders yet.</p>
+    {% endif %}
+</div>
+
+<!-- Bootstrap JS for collapse -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+{%endif%}
+
+{% endblock %}

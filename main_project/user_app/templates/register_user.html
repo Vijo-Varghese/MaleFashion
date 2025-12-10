@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}register{% endblock %}
+
+{% block content %}
+
+<div class="container text-center py-3">
+  <h1 class="display-5 fw-bold text-dark">Register</h1>
+</div>
+
+<section class="py-4" style="margin-top: -20px;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        
+        <form action="{% url 'register_user' %}" method="post" 
+              class="shadow p-4 rounded bg-light" data-aos="fade-up" data-aos-delay="300">
+          {% csrf_token %}
+
+          <h3 class="text-center mb-4">Create Your Account</h3>
+
+          <div class="row gy-4">
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Name</label>
+              <input type="text" name="name" class="form-control" placeholder="Enter your name" required pattern="^[A-Za-z\s]{3,50}$" title="Enter a valid name">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Username</label>
+              <input type="text" name="username" class="form-control" placeholder="Choose a username" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Enter a valid username like example@gmail.com">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Email</label>
+              <input type="email" name="email" class="form-control" placeholder="Enter your email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Enter a valid email like example@gmail.com">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Phone</label>
+              <input type="text" name="phone" class="form-control" placeholder="Enter your phone number" required pattern="[0-9]{10}" title="Enter valid phone Number(10 Digits)">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Address</label>
+              <input type="text" name="address" class="form-control" placeholder="Enter your address" required pattern="^[a-zA-Z0-9\s,.\-\/#]{5,100}$" title="Enter valid address">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">City</label>
+              <input type="text" name="city" class="form-control" placeholder="Enter your city" required pattern="^[A-Za-z\s]{2,50}$" title="Only letters allowed (2-50 characters)">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Pincode</label>
+              <input type="text" name="pincode" class="form-control" placeholder="Enter pincode" required pattern="^[1-9][0-9]{5}$" title="Enter a valid 6-digit Indian pincode (Example: 680001, 560034)">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Password</label>
+              <input type="password" name="password" class="form-control" placeholder="Enter password" required pattern=".{6,}" title="Password must be at least 6 characters long.">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Re-enter Password</label>
+              <input type="password" name="re_password" class="form-control" placeholder="Re-enter password" required pattern=".{6,}" title="Password must be at least 6 characters long.">
+            </div>
+
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary px-5 mt-3">Submit</button>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

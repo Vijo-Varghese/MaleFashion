@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}cart{% endblock %}
+
+{% block content %}
+  {% for i in messages %}
+    <script>
+        alert("{{ i }}")
+    </script>
+  {% endfor %}
+      <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>Shopping Cart</h4>
+                       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shopping Cart Section Begin -->
+    <section class="shopping-cart spad" >
+        <div class="container" style="max-width: 1300px; margin:auto;">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="shopping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Size</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                                {% for i in cart %}
+                                <tr>
+                                    <td class="product__cart__item">
+                                        <div class="product__cart__item__pic">
+                                            <img src="{{ i.product.image.url }}" alt="" style="width:150px; height:150px; object-fit:cover;">
+
+                                        </div>
+                                        <div class="product__cart__item__text">
+                                            <h6>{{ i.product.product_name }}</h6>
+                                            <h5>{{ i.product.price }}</h5>
+                                        </div>
+                                    </td>
+                                    <td class="quantity__item">
+                                        <div class="quantity">
+                                            <h5 style="margin-left: 25px;">{{ i.quantity }}</h5>
+
+                                        </div>
+                                    </td>
+                                    <td class="quantity__item">
+                                        <div class="quantity">
+                                            <h5>{{ i.size }}</h5>
+                                        </div>
+                                    </td>
+
+                                    <td class="cart__price">{{ i.total_amount }}</td>
+                                    <td class="cart__close">
+                                    <a href="{%url 'delete_cart_product' i.id%}"><i class="fa fa-close"></i></a>
+                                    </td>
+
+                                    
+                                </tr>
+                               {%endfor%}
+                               
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="continue__btn">
+                                <a href="{%url 'shop'%}">Continue Shopping</a>
+                            </div>
+                            <!-- <div class="continue__btn update__btn">
+                                <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
+                            </div> -->
+                        </div>
+                    </div>
+                </div> 
+                <div class="col-lg-4">
+                    <!-- <div class="cart__discount">
+                        <h6>Discount codes</h6>
+                        <form action="#">
+                            <input type="text" placeholder="Coupon code">
+                            <button type="submit">Apply</button>
+                        </form>
+                    </div> --> <br><br><br><br>
+                    <div class="cart__total">
+                        <h6>Cart total</h6>
+                        <ul>
+                            <!-- <li>Subtotal <span>₹{{g_total}}</span></li> -->
+                            <li>Total <span>₹{{g_total}}</span></li>
+                        </ul>
+                        <!-- <a href="{% url 'check_out' request.user.id %}" class="primary-btn">Proceed to checkout</a> -->
+                         {% if g_total > 0 %}
+    <a href="{% url 'check_out' request.user.id %}" class="primary-btn">
+        Proceed to checkout
+    </a>
+{% else %}
+    <a class="primary-btn" style="pointer-events:none; opacity:0.5; cursor:not-allowed;">
+        Proceed to checkout
+    </a>
+    <p style="color:red; margin-top:8px;">No items in cart.</p>
+{% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shopping Cart Section End -->
+     {% endblock %}

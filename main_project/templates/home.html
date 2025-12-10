@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+ {% for i in messages %}
+    <script>
+        alert("{{i}}")
+    </script>
+    {%endfor%}
+    <style>
+      /* Hero slider background zoom */
+.hero__items {
+    overflow: hidden;
+    position: relative;
+}
+.hero__items::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    z-index: 0;
+    transform: scale(1);
+    transition: transform 8s ease;
+}
+.hero__slider .owl-item.active .hero__items::before {
+    transform: scale(1.05);
+}
+
+/* Text fade-in */
+.hero__text {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+    position: relative;
+    z-index: 1;
+}
+.hero__slider .owl-item.active .hero__text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* CTA button upgrade */
+.hero__text .primary-btn {
+    background: linear-gradient(90deg, #fceabb, #f8b500);
+    color: #333;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.hero__text .primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+/* Optional: social icons hover */
+.hero__social a {
+    transition: transform 0.3s, color 0.3s;
+}
+.hero__social a:hover {
+    color: #f8b500;
+    transform: scale(1.2);
+}
+
+    </style>
+    <!-- Hero Discount Banner — Clean Version -->
+<div style="
+    background: linear-gradient(90deg, #fceabb, #f8b500); /* soft yellow-orange gradient */
+    color: #333333;
+    text-align: center;
+    padding: 25px 0;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    border-radius: 6px;
+    margin: 15px;
+    position: relative;
+">
+    New here? Get 20% off on your first order.
+    <span style="
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: #555;
+    " onclick="this.parentElement.style.display='none';">✖</span>
+</div>
+
+    <section class="hero">
+        <div class="hero__slider owl-carousel">
+            <div class="hero__items set-bg" data-setbg="{% static 'img/hero/hero-1.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-7 col-md-8">
+                            <div class="hero__text">
+                                <h6>Summer Collection</h6>
+                                <h2>Fall - Winter Collections 2030</h2>
+                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
+                                commitment to exceptional quality.</p>
+                                <a href="{%url 'shop'%}" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <div class="hero__social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero__items set-bg" data-setbg="{% static 'img/hero/hero-2.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-7 col-md-8">
+                            <div class="hero__text">
+                                <h6>Summer Collection</h6>
+                                <h2>Fall - Winter Collections 2030</h2>
+                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
+                                commitment to exceptional quality.</p>
+                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <div class="hero__social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    {% if role == "staff" %}
+<div class="container">
+  <div class="row py-3">
+    {% for i in products %}
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+        <div class="card h-100" style="width: 12rem; height: 12rem;"> <!-- square card -->
+
+          <img src="{{ i.image.url }}" class="card-img-top"
+               style="width: 100%; height: 100%; object-fit: cover;" alt="Product">
+
+          <div class="card-body p-2 text-center" style="position: absolute; bottom: 0; width: 100%; background: rgba(255,255,255,0.8);">
+            <h6 class="card-title mb-0">{{ i.product_name }}</h6>
+          </div>
+
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+{% elif role == "buyer" %}
+
+<!-- Banner Section Begin -->
+<section class="banner spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 offset-lg-4">
+                <div class="banner__item">
+                    <div class="banner__item__pic">
+                        <img src="{% static 'img/banner/banner-1.jpg' %}" alt="">
+                    </div>
+                    <div class="banner__item__text">
+                        <h2>Clothing Collections 2030</h2>
+                        <a href="{%url 'shop'%}">Shop now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="banner__item banner__item--middle">
+                    <div class="banner__item__pic">
+                        <img src="{% static 'img/banner/rolex3.png' %}" alt="">
+                    </div>
+                    <div class="banner__item__text">
+                        <h2>Watches</h2>
+                        <a href="{%url 'shop'%}">Shop now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="banner__item banner__item--last">
+                    <div class="banner__item__pic">
+                        <img src="{% static 'img/banner/banner-3.jpg' %}" alt="">
+                    </div>
+                    <div class="banner__item__text">
+                        <h2>Shoes Spring 2030</h2>
+                        <a href="{%url 'shop'%}">Shop now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Banner Section End -->
+ <div class="row">
+                <div class="col-lg-12">
+                    <ul class="filter__controls">
+                        <li class="active" data-filter="*">Best Sellers</li>
+                      
+                     
+                    </ul>
+                </div>
+            </div>
+
+
+<div class="container">
+  <div class="row py-3">
+    {% for i in products %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"> <!-- 4 per row on lg -->
+      <div class="card" style="width:100%; height:16rem; position:relative; overflow:hidden;">
+
+        <!-- Image wrapper -->
+        <div style="position:relative; height:78%;"
+             onmouseover="this.querySelector('.btn-area').style.display='flex'"
+             onmouseout="this.querySelector('.btn-area').style.display='none'">
+
+          <img src="{{ i.image.url }}" class="card-img-top"
+               style="height:100%; width:100%; object-fit:cover;">
+
+          <!-- Hidden until hover -->
+          <div class="btn-area"
+               style="display:none; position:absolute; top:0; left:0; width:100%; height:100%;
+               background:rgba(0,0,0,0.45); justify-content:center; align-items:center;">
+            {% if request.user.is_authenticated %}
+            <a href="{%url 'shop'%}" class="btn btn-light btn-sm">View More</a>
+            {%else%}
+            <a href="{%url 'shop'%}" class="btn btn-light btn-sm">View More</a>
+            {%endif%}
+          </div>
+        </div>
+
+        <!-- Name -->
+        <div class="card-body p-2 text-center">
+          <h6 class="card-title mb-0">{{ i.product_name }}</h6>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+
+
+{%endif%}
+
+
+<script>
+$('.hero__slider').on('changed.owl.carousel', function(event) {
+    $('.owl-item .hero__text').css({opacity: 0, transform: 'translateY(20px)'});
+    $('.owl-item.active .hero__text').css({opacity: 1, transform: 'translateY(0)'});
+});
+</script>
+
+    {%endblock%}

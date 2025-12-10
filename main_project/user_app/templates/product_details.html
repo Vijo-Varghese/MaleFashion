@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}product details{% endblock %}
+
+{% block content %}
+
+ <form action="{%url 'add_cart' products.id%}" method="post">
+    {% csrf_token %}
+<section class="shop-details">
+    <div class="product__details__pic">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="product__details__breadcrumb">
+                        <span>Product Details</span>
+                    </div>
+                </div>
+            </div>
+         
+                <!-- Big Image Full Width -->
+                <!-- <div class="col-12 text-center">
+                    <div class="product__details__pic__item">
+                        <img src="{{ products.image.url }}" alt="{{ products.product_name }}" style="width:100%; max-height:500px; height:auto; object-fit:contain;">
+
+                    </div>
+                </div> -->
+                <div class="row justify-content-center">
+
+  <div class="row">
+
+    <!-- Thumbnail list -->
+    <div class="col-lg-3 col-md-3">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
+                    <img src="{{ products.image.url }}" style="width:80px; height:80px; object-fit:cover; border-radius:5px; cursor:pointer;">
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
+                    <img src="{{ products.image2.url }}" style="width:80px; height:80px; object-fit:cover; border-radius:5px; cursor:pointer;">
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
+                    <img src="{{ products.image3.url }}" style="width:80px; height:80px; object-fit:cover; border-radius:5px; cursor:pointer;">
+                </a>
+            </li>
+        </ul>
+    </div>
+
+<!-- Big image -->
+<div class="col-lg-8 col-md-9 text-center">
+    <div class="tab-content">
+        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+            <img src="{{ products.image.url }}" 
+                 style="width:100%; max-height:600px; object-fit:contain;">
+        </div>
+        <div class="tab-pane" id="tabs-2" role="tabpanel">
+            <img src="{{ products.image2.url }}" 
+                 style="width:100%; max-height:600px; object-fit:contain;">
+        </div>
+        <div class="tab-pane" id="tabs-3" role="tabpanel">
+            <img src="{{ products.image3.url }}" 
+                 style="width:100%; max-height:600px; object-fit:contain;">
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="product__details__content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="product__details__text">
+                        <h4>{{ products.product_name }}</h4>
+                        <h4>{{ products.brand }}</h4>
+                        <!-- <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                            <span> - 5 Reviews</span>
+                        </div> -->
+                        <h3>&#8377;{{ products.price }} </h3>
+                        <h4>stock:{{ products.stock }} </h4>
+                        <p>{{ products.description }}</p>
+
+                        <div class="product__details__option">
+                            <div class="product__details__option__size" style="margin-top: 15px;">
+                            <span style="font-weight: bold; margin-right: 10px;">Size:</span>
+
+                            {% for size in sizes %}
+                                {% with size_clean=size|cut:" " %}
+                                <label for="size_{{ size_clean }}" style="margin-right: 10px; cursor: pointer;">
+                                {{ size_clean }}
+                                <input type="radio"
+                                id="size_{{ size_clean }}"
+                                name="selected_size"
+                                value="{{ size_clean }}"
+                                style="margin-left: 5px;"
+                                {% if products.category.category_name == "Dress" or products.category.category_name == "Shoes" %}
+                        required
+                   {% endif %}>
+                                </label>
+                                {% endwith %}
+                            {% endfor %}
+                        </div>
+
+                            <br><br>
+                            <!-- <div class="product__details__option__color">
+                                <span>Color:</span>
+                                <label class="c-1" for="sp-1">
+                                    <input type="radio" id="sp-1">
+                                </label>
+                                <label class="c-2" for="sp-2">
+                                    <input type="radio" id="sp-2">
+                                </label>
+                                <label class="c-3" for="sp-3">
+                                    <input type="radio" id="sp-3">
+                                </label>
+                                <label class="c-4" for="sp-4">
+                                    <input type="radio" id="sp-4">
+                                </label>
+                                <label class="c-9" for="sp-9">
+                                    <input type="radio" id="sp-9">
+                                </label>
+                            </div>
+                        </div> -->
+
+                        <div class="product__details__cart__option">
+                            <div class="quantity">
+                                <!-- <div class="pro-qty">
+                                    <input type="number" value="1" min="1">
+                                </div> -->
+                                <input type="number" name="stock" value="1" min="1" step="1" max="{{ products.stock }}"
+                                style="width:110px; text-align:center; padding:8px; border-radius:0; border:0.5px solid #6a6868;">
+
+
+                            </div>
+                            {% if request.user.is_authenticated %}
+                            {% if products.stock != 0 %}
+                            <button type="submit" class="primary-btn">Add to Cart</button>
+                             {% else %}
+                            <p>out of stock</p>
+                            {% endif %}
+                            {%else%}
+                            <a href="{% url 'login_user'%}" class="primary-btn">Login For More</a>
+                            {% endif %}
+
+
+                        </div>
+
+                        <!-- <div class="product__details__btns__option">
+                            <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>
+                            
+                        </div> -->
+
+                       <div class="product__details__last__option" style="margin-top:25px;">
+
+    <h3 style="margin-bottom:14px; font-size:20px; font-weight:600; color:#222;">
+        Reviews
+    </h3>
+
+    {% if feedback %}
+
+        {% for i in feedback|slice:":3" %}
+            <div style="
+                padding:14px 0;
+                font-size:15px;
+                line-height:22px;
+                color:#333;
+                border-bottom:1px solid #e5e5e5;
+            ">
+                {{ i.feedback }}
+            </div>
+        {% endfor %}
+
+        {% if feedback|length > 3 %}
+            <button id="toggleReviewsBtn" type="button" class="primary-btn"
+                style="
+                    background:none;
+                    border:none;
+                    color:#0a0c0f;
+                    font-size:15px;
+                    margin-top:12px;
+                    cursor:pointer;
+                    padding:0;
+                ">
+                View More ▼
+            </button>
+
+            <div id="extraReviews" style="display:none; margin-top:10px;">
+                {% for i in feedback|slice:"3:" %}
+                    <div style="
+                        padding:14px 0;
+                        font-size:15px;
+                        line-height:22px;
+                        color:#333;
+                        border-bottom:1px solid #e5e5e5;
+                    ">
+                        {{ i.feedback }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    {% else %}
+        <p style="color:#777; font-size:15px;">No reviews yet.</p>
+    {% endif %}
+</div>
+
+</div>
+
+                    </div> 
+                </div>
+            </div> 
+        </div> 
+    </div>
+</section>
+</form>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+    const btn = document.getElementById("toggleReviewsBtn");
+    const more = document.getElementById("extraReviews");
+
+    if (btn){
+        btn.onclick = () => {
+            if (more.style.display === "none"){
+                more.style.display = "block";
+                btn.innerText = "Show Less ▲";
+            } else {
+                more.style.display = "none";
+                btn.innerText = "View More ▼";
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}

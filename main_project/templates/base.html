@@ -1,0 +1,397 @@
+{% load static %}
+{% load user_tags %}
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Male-Fashion | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/elegant-icons.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__option">
+            <div class="offcanvas__links">
+                <a href="#">Sign in</a>
+                <a href="#">FAQs</a>
+            </div>
+            <div class="offcanvas__top__hover">
+                <span>Usd <i class="arrow_carrot-down"></i></span>
+                <ul>
+                    <li>USD</li>
+                    <li>EUR</li>
+                    <li>USD</li>
+                </ul>
+            </div>
+        </div>
+        <div class="offcanvas__nav__option">
+            <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
+            <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
+            <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>0</span></a>
+            <div class="price">$0.00</div>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__text">
+            <p>Free shipping, 7-day return or refund guarantee.</p>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="header__top__left">
+                            <p>Free shipping, 7-day return or refund guarantee.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                        <div class="header__top__right">
+                            <div class="header__top__links">
+                                {% if request.user.is_authenticated %}
+                                <!-- <a href="#">Sign in</a>
+                                <a href="#">FAQs</a> -->
+                                <a href="{%url 'logout_user'%}">Log out</a>
+                                {%else%}
+                                <a href="{%url 'login_user'%}">Login</a>
+                            
+                            <a href="{%url 'register_user'%}">Register</a>
+                            {%endif%}
+                                  
+
+
+                            </div>
+                            <!-- <div class="header__top__hover">
+                                <span>Usd <i class="arrow_carrot-down"></i></span>
+                                <ul>
+                                    <li>USD</li>
+                                    <li>EUR</li>
+                                    <li>USD</li>
+                                </ul>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                        <a href="./index.html"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <nav class="header__menu mobile-menu">
+                        {% if request.user.is_authenticated %}
+                        <ul>
+                            <li class="active"><a href="{%url 'home'%}">Home</a></li>
+                            <!-- <li><a href="{%url 'account'%}">{{ request.user.first_name }}</a></li> -->
+                            {% if not request.user|is_buyer %}
+                            <li><a href="{%url 'view_user'%}">Add products</a></li>
+                            <li><a href="{%url 'view_products'%}">View products</a></li> 
+                            <li><a href="{%url 'account'%}">Order Details</a></li>
+                            {%else%}
+                            <li><a href="{%url 'shop'%}">Shop</a></li>
+                            <li><a href="{%url 'account'%}">{{ request.user.first_name }}</a></li>
+                            <li><a href="{%url 'about_us'%}">About Us</a></li>
+                            <!-- <li><a href="{%url 'view_cart'%}"><i class="fa fa-shopping-cart"></i></a></li>
+                            <li><a href="{%url 'view_wishlist'%}"><img src="{% static 'img/icon/heart.png' %}" alt=""></a></li> -->
+                   
+                            {%endif%}
+                            <!-- <li><a href="{%url 'logout_user'%}">Log out</a></li> -->
+                            
+                            <!-- <li><a href="./shop.html">Shop</a></li>
+                            <li><a href="#">Pages</a>
+                                <ul class="dropdown">
+                                    <li><a href="./about.html">About Us</a></li>
+                                    <li><a href="./shop-details.html">Shop Details</a></li>
+                                    <li><a href="./shopping-cart.html">Shopping Cart</a></li>
+                                    <li><a href="./checkout.html">Check Out</a></li>
+                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            
+                            <li><a href="./contact.html">Contacts</a></li> -->
+                            
+                        </ul>
+                        {%else%}
+                        <ul>
+                            <li class="active"><a href="{%url 'home'%}">Home</a></li>
+                            
+                            <!-- <li><a href="{%url 'login_user'%}">Login</a></li>
+                            
+                            <li><a href="{%url 'register_user'%}">Register</a></li> -->
+                            
+                        </ul>
+                        
+                            {%endif%}
+
+                    </nav>
+                </div>
+                <!-- <div class="col-lg-3 col-md-3">
+                    <div class="header__nav__option">
+                        <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
+                        <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
+                        <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>0</span></a>
+                        
+                    </div>
+                </div> -->
+                <div class="col-lg-3 col-md-3">
+    <div class="header__nav__option" style="display:flex; justify-content:flex-end; gap:20px;">
+        {% if request.user.is_authenticated and request.user|is_buyer %}
+            <a href="{% url 'view_wishlist' %}">
+                <img src="{% static 'img/icon/heart.png' %}" alt="">
+            </a>
+            <a href="{% url 'view_cart' %}" style="text-decoration:none; color:inherit; cursor:pointer;">
+             <i class="fa fa-shopping-cart" style="font-size:22px; position: relative; top:-2px; pointer-events:none;"></i>
+            </a>
+
+
+
+
+        {% endif %}
+    </div>
+</div>
+
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+        
+    </header>
+
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+
+     <footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <img src="{% static 'img/footer-logo.png' %}" alt="">
+                    </div>
+                    <p>The customer is at the heart of our unique business model, which includes design.</p>
+                    <img src="{% static 'img/payment.png' %}" alt="">
+                </div>
+            </div>
+
+            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Shopping</h6>
+                    <ul>
+                        <li style="color:white;">Clothing Store</li>
+                        <li style="color:white;">Trending Shoes</li>
+                        <li style="color:white;">Accessories</li>
+                        <li style="color:white;">Sale</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Support</h6>
+                    <ul>
+                        <li style="color:white;">Contact Us</li>
+                        <li style="color:white;">Payment Methods</li>
+                        <li style="color:white;">Delivery</li>
+                        <li style="color:white;">Return & Exchanges</li>
+                    </ul>
+                </div>
+            </div>
+
+           <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+    <div class="footer__widget">
+        <h6>Newsletter</h6>
+        <div class="footer__newslatter">
+            <p>Be the first to know about new arrivals, look books, sales & promos!</p>
+
+            <p style="margin: 10px 0; font-size: 16px; font-weight: 600;">
+                📞 +91 98765 43210
+            </p>
+            <p style="margin: 0; font-size: 15px;">
+                ✉️ malefashion@gmail.com
+            </p>
+
+        </div>
+    </div>
+</div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="footer__copyright__text">
+                    <p>
+                        Copyright © <script>document.write(new Date().getFullYear());</script> 
+                        All rights reserved | This template is made with ❤ by Colorlib
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+    <!-- Js Plugins -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/mixitup.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+<!-- add product -->
+<script>
+$(document).ready(function () {
+
+    let manualChange = true;
+
+    $('#categories').on('change', function () {
+        if (!manualChange) return;
+
+        const categoryId = $(this).val();
+        const subSelect = $('#sub_categories');
+
+        console.log("Selected Category ID:", categoryId);
+
+        subSelect.html('<option value="">-- Select Sub Category --</option>');
+
+        if (categoryId) {
+            fetch("{% url 'ajax_load_subcategories' %}?category_id=" + categoryId)
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log("Response:", data);
+
+                    data.forEach(sub => {
+                        subSelect.append(`<option value="${sub.id}">${sub.sub_category_name}</option>`);
+                    });
+
+                    // Stop infinite loop trigger
+                    manualChange = false;
+                    subSelect.niceSelect('update');
+                    setTimeout(() => manualChange = true, 200);
+                })
+                .catch(err => console.error(err));
+        }
+    });
+
+});
+</script>
+<!-- add product -->
+
+
+<!-- wishlist -->
+<script>
+document.querySelectorAll('.wishlist-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const productId = this.dataset.product;
+        const icon = this.querySelector('.wishlist-icon');
+
+        fetch("{% url 'toggle_wishlist' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({ 'product_id': productId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            icon.src = data.added 
+                ? "{% static 'img/icon/red_heart.png' %}" 
+                : "{% static 'img/icon/heart.png' %}";
+        });
+    });
+});
+</script>
+<!-- wishlist -->
+
+<!-- size -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const sizeContainer = document.getElementById('sizeContainer');
+
+    const sizesByCategory = {
+        "1": ["XS","S","M","L","XL","XXL"],
+        "2": ["6","7","8","9","10"],
+        "3": []
+    };
+
+    // Use delegated listener in case #categories is manipulated by jQuery
+    $(document).on('change', '#categories', function() {
+        const catId = $(this).val();
+        sizeContainer.innerHTML = "";
+
+        if (!sizesByCategory[catId] || sizesByCategory[catId].length === 0) {
+            sizeContainer.innerHTML = "<p>No sizes required for this category</p>";
+            return;
+        }
+
+        sizesByCategory[catId].forEach(size => {
+            const label = document.createElement('label');
+            label.style.marginRight = "10px";
+            label.innerHTML = `<input type="checkbox" name="sizes" value="${size}"> ${size}`;
+            sizeContainer.appendChild(label);
+        });
+    });
+});
+</script>
+
+
+<!-- size -->
+
+
+</body>
+
+</html>

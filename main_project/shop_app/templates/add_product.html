@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Products{% endblock %}
+
+{% block content %}
+  {% for i in messages %}
+    <script>
+        alert("{{ i }}")
+    </script>
+  {% endfor %}
+
+<main class="main">
+
+  <!-- Page Title -->
+  <div>
+    <div class="container text-center py-3">
+      <h1 class="display-5 fw-bold text-dark">Add Products</h1>
+      <p class="lead text-muted"></p>
+    </div>
+  </div> 
+  <!-- End Page Title -->
+    
+
+
+  <!-- Add Product Form -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <form action="{% url 'add_products' %}" method="post" enctype="multipart/form-data"
+                class="shadow p-4 rounded bg-light" data-aos="fade-up" data-aos-delay="300">
+            {% csrf_token %}
+
+            <h3 class="text-center mb-4 fw-semibold">Product Information</h3>
+
+            <div class="mb-3">
+              <label for="product_name" class="form-label fw-semibold">Product Name</label>
+              <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Enter product name" required pattern="^[A-Za-z0-9\s\-&]{3,50}$">
+            </div>
+
+            <div class="mb-3">
+              <label for="brand" class="form-label fw-semibold">Brand</label>
+              <input type="text" class="form-control" id="brand" name="brand" placeholder="Enter brand" required pattern="^[A-Za-z0-9\s\-&]{3,50}$" >
+            </div>
+
+            <div class="mb-3">
+              <label for="price" class="form-label fw-semibold">Price</label>
+              <input type="text" class="form-control" id="price" name="price" placeholder="Enter product price" required pattern="^\d+(\.\d{1,2})?$">
+            </div>
+
+            <div class="mb-3">
+              <label for="stock" class="form-label fw-semibold">Stock</label>
+              <input type="number" class="form-control" id="stock" name="stock" placeholder="Enter available stock" required pattern="^[1-9]\d*$">
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="form-label fw-semibold">Description</label>
+              <input type="text" class="form-control" id="description" name="description" placeholder="Enter description" required pattern="^[A-Za-z0-9.,!?()\-\s]{10,500}$">
+            </div>
+              
+            <div class="mb-3">
+              <label for="categories" class="form-label fw-semibold">Category</label>
+              <select name="categories" id="categories" class="form-control"  required>
+                <option value="">-- Select Category --</option>
+                {% for cat in category %}
+                    <option value="{{ cat.id }}">{{ cat.category_name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="sub_categories" class="form-label fw-semibold">Sub Category</label>
+              <select name="sub_categories" id="sub_categories" class="form-control" required>
+                <option value="" disabled selected>-- Select Sub Category --</option>
+              </select>
+            </div>
+            <!-- size -->
+                <div class="mb-3">
+            <label class="form-label fw-semibold">Sizes</label>
+            <div id="sizeContainer">
+       
+          </div>
+          </div>
+         
+
+           <!-- size -->
+
+
+            <div class="mb-3">
+              <label for="photo" class="form-label fw-semibold">Product Image</label>
+              <input type="file" class="form-control" id="photo" name="photo" required>
+            </div>
+            <div class="mb-3">
+              <label for="photo2" class="form-label fw-semibold">Product Image</label>
+              <input type="file" class="form-control" id="photo2" name="photo2" required>
+            </div>
+            <div class="mb-3">
+              <label for="photo3" class="form-label fw-semibold">Product Image</label>
+              <input type="file" class="form-control" id="photo3" name="photo3" required>
+            </div>
+
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-primary px-4">Submit</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- JS for dynamic subcategories -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const categorySelect = document.getElementById('categories');
+    const subcategorySelect = document.getElementById('sub_categories');
+
+    categorySelect.addEventListener('change', function() {
+        const categoryId = this.value;
+
+        subcategorySelect.innerHTML = '<option value="">-- Select Sub Category --</option>';
+
+        if (categoryId) {
+            fetch("{% url 'ajax_load_subcategories' %}?category_id=" + categoryId)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(sub => {
+                        const opt = document.createElement('option');
+                        opt.value = sub.id;
+                        opt.textContent = sub.sub_category_name;
+                        subcategorySelect.appendChild(opt);
+                    });
+                })
+                .catch(error => console.error('Error fetching subcategories:', error));
+        }
+    });
+});
+</script>
+
+
+<style>
+  .nice-select {
+    width: 100% !important;
+    height: 46px !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 6px !important;
+    padding-left: 12px !important;
+    font-size: 16px !important;
+    background-color: #fff !important;
+}
+
+.nice-select .list {
+    width: 100% !important;
+}
+
+</style>
+{% endblock %}
